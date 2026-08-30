@@ -121,7 +121,7 @@ const Topbar = ({ setSidebarOpen }) => {
       setPwdLoading(true);
       setPwdMessage({ text: "", type: "" });
 
-      const response = await fetch(`http://localhost:5000/api/admin/spoc/update-password/${spocId}`, {
+      const response = await fetch(`https://ksrceneo-eventhub.onrender.com/api/admin/spoc/update-password/${spocId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

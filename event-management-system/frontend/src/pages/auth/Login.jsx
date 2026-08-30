@@ -109,7 +109,7 @@ const Login = () => {
     setModalMessage({ text: "", isError: false });
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/forgot-password", {
+      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -169,7 +169,7 @@ const Login = () => {
 
       if (selectedRole === "spoc") {
         try {
-          const response = await fetch("http://localhost:5000/api/auth/spoc-login", {
+          const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/auth/spoc-login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -201,7 +201,7 @@ const Login = () => {
       }
 
       try {
-        const response = await fetch("http://localhost:5000/api/auth/login", {
+        const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/auth/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

@@ -14,10 +14,7 @@ import {
   Loader2,
   AlertCircle,
   PieChart as ChartIcon,
-  GraduationCap,
-  LayoutDashboard,
-  ListChecks,
-  CalendarDays,
+
 } from "lucide-react";
 
 // ================================================================
@@ -171,12 +168,12 @@ const SpocDashboard = () => {
         const encodedDept = encodeURIComponent(spocDepartment);
 
         const [usersRes, regsRes, eventsRes] = await Promise.all([
-          fetch("http://localhost:5000/api/users", { method: "GET", headers }),
+          fetch("https://ksrceneo-eventhub.onrender.com/api/users", { method: "GET", headers }),
           fetch(
-            `http://localhost:5000/api/registrations/department-requests?department=${encodedDept}`,
+            `https://ksrceneo-eventhub.onrender.com/api/registrations/department-requests?department=${encodedDept}`,
             { method: "GET", headers }
           ).catch(() => null),
-          fetch("http://localhost:5000/api/events", { method: "GET", headers }).catch(() => null),
+          fetch("https://ksrceneo-eventhub.onrender.com/api/events", { method: "GET", headers }).catch(() => null),
         ]);
 
         if (!usersRes.ok) {

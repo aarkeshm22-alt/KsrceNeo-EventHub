@@ -76,7 +76,7 @@ useEffect(() => {
         department = cachedUser.department;
       } else if (currentUserId) {
         const response = await fetch(
-          `http://localhost:5000/api/auth/profile/${currentUserId}`,
+          `https://ksrceneo-eventhub.onrender.com/api/auth/profile/${currentUserId}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -108,7 +108,7 @@ useEffect(() => {
   const fetchSpocByDepartment = async (department) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/by-department?department=${encodeURIComponent(department)}`,
+        `https://ksrceneo-eventhub.onrender.com/api/by-department?department=${encodeURIComponent(department)}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
@@ -140,7 +140,7 @@ useEffect(() => {
   // ✅ Accept an optional `excludeId` to filter out the SPOC
   const fetchMentorsByDepartment = async (department, excludeId = null) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/users`, {
+      const response = await fetch(`https://ksrceneo-eventhub.onrender.com/api/users`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
         },
@@ -255,7 +255,7 @@ useEffect(() => {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/api/registrations/submit", {
+      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/registrations/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -47,7 +47,7 @@ const EventManagement = () => {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:5000/api/events");
+      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/events");
       if (!response.ok) {
         throw new Error("Failed to pull metrics from global event registries.");
       }

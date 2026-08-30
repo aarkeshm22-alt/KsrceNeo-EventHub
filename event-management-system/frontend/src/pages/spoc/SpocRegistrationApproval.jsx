@@ -68,7 +68,7 @@ const SpocApproval = () => {
   const fetchAllEvents = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:5000/api/events", {
+      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/events", {
         headers: { Authorization: `Bearer ${token}` }
       });
       const result = await response.json();
@@ -103,7 +103,7 @@ const SpocApproval = () => {
         return;
       }
 
-      let url = `http://localhost:5000/api/registrations/department-requests?department=${encodeURIComponent(spocDepartment)}`;
+      let url = `https://ksrceneo-eventhub.onrender.com/api/registrations/department-requests?department=${encodeURIComponent(spocDepartment)}`;
       if (statusFilter !== "All") {
         url += `&status=${encodeURIComponent(statusFilter)}`;
       }
@@ -167,7 +167,7 @@ const SpocApproval = () => {
     setSubmitting(true);
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:5000/api/registrations/${regId}/status`, {
+      const response = await fetch(`https://ksrceneo-eventhub.onrender.com/api/registrations/${regId}/status`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -200,7 +200,7 @@ const SpocApproval = () => {
       try {
         setUpdatingRemarks((prev) => ({ ...prev, [regId]: true }));
         const token = localStorage.getItem("token");
-        const response = await fetch(`http://localhost:5000/api/registrations/${regId}/remarks`, {
+        const response = await fetch(`https://ksrceneo-eventhub.onrender.com/api/registrations/${regId}/remarks`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",

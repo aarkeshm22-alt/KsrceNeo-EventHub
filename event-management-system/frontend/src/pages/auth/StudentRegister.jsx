@@ -120,7 +120,7 @@ const StudentRegister = () => {
     setOtpError("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/send-otp", {
+      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/auth/send-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -160,7 +160,7 @@ const StudentRegister = () => {
     setServerError("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/register/student", {
+      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/auth/register/student", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -197,7 +197,7 @@ const StudentRegister = () => {
     setServerError("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/send-otp", {
+      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/auth/send-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -49,7 +49,7 @@ const MyApplications = () => {
 
         const currentUserId = localStorage.getItem("userId") || "6a27f5ff1b3ae178a3954aba";
         const fetchPromise = fetch(
-          `http://localhost:5000/api/registrations/my-submissions?userId=${currentUserId}`,
+          `https://ksrceneo-eventhub.onrender.com/api/registrations/my-submissions?userId=${currentUserId}`,
           {
             method: "GET",
             headers: {

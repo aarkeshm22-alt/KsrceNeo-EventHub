@@ -40,10 +40,10 @@ const Dashboard = () => {
   const fetchDashboardData = async () => {
     try {
       const [eventsResult, usersResult, regsResult, spocsResult] = await Promise.allSettled([
-        axios.get("http://localhost:5000/api/events"),
-        axios.get("http://localhost:5000/api/users"),
-        axios.get("http://localhost:5000/api/registrations"),
-        axios.get("http://localhost:5000/api/admin/spoc", {
+        axios.get("https://ksrceneo-eventhub.onrender.com/api/events"),
+        axios.get("https://ksrceneo-eventhub.onrender.com/api/users"),
+        axios.get("https://ksrceneo-eventhub.onrender.com/api/registrations"),
+        axios.get("https://ksrceneo-eventhub.onrender.com/api/admin/spoc", {
           headers: { "x-user-role": "admin" },
         }),
       ]);

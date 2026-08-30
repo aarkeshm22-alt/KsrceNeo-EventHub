@@ -46,7 +46,7 @@ const EventManagement = () => {
     try {
       setIsLoading(true);
       setSystemError("");
-      const response = await fetch("http://localhost:5000/api/events");
+      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/events");
       const data = await response.json();
       if (response.ok) setEvents(data);
       else setSystemError("Failed to parse event database track segments.");
@@ -62,7 +62,7 @@ const EventManagement = () => {
   const fetchRegistrations = async () => {
     try {
       const token = localStorage.getItem("token") || "";
-      const response = await fetch("http://localhost:5000/api/registrations", {
+      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/registrations", {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }
       });
       if (response.ok) {

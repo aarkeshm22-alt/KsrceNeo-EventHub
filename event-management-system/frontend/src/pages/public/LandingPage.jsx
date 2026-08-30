@@ -102,7 +102,7 @@ const LandingPage = () => {
     const fetchActiveEvents = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("http://localhost:5000/api/events");
+        const response = await axios.get("https://ksrceneo-eventhub.onrender.com/api/events");
         const fetchedData = response.data.events || response.data;
         const eventsArray = Array.isArray(fetchedData) ? fetchedData : [];
 

@@ -24,7 +24,7 @@ const MentorStatus = () => {
         const currentUserId = localStorage.getItem("userId") || "6a27f5ff1b3ae178a3954aba";
         const token = localStorage.getItem("token") || "";
 
-        const response = await fetch(`http://localhost:5000/api/registrations/my-submissions?userId=${currentUserId}`, {
+        const response = await fetch(`https://ksrceneo-eventhub.onrender.com/api/registrations/my-submissions?userId=${currentUserId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

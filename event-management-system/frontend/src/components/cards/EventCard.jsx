@@ -441,7 +441,7 @@ const EventCard = ({
   // ================================================================
 
   const handleFormRedirection = () => {
-    navigate("/student/register", { state: { event } });
+    navigate("https://ksrceneo-eventhub.onrender.com/student/register", { state: { event } });
   };
 
   const handleEditAction = (e) => {
@@ -449,7 +449,7 @@ const EventCard = ({
     if (onEdit) {
       onEdit(event);
     } else {
-      navigate(`/admin/edit-event/${event._id || event.id}`, { state: { event } });
+      navigate(`https://ksrceneo-eventhub.onrender.com/admin/edit-event/${event._id || event.id}`, { state: { event } });
     }
   };
 
@@ -470,7 +470,7 @@ const EventCard = ({
       return;
     }
     try {
-      const response = await fetch(`http://localhost:5000/api/events/${id}`, {
+      const response = await fetch(`https://ksrceneo-eventhub.onrender.com/api/events/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

@@ -51,7 +51,7 @@ const StudentManagement = () => {
     try {
       setIsLoading(true);
       setError(null);
-      const response = await fetch("http://localhost:5000/api/users");
+      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/users");
       if (!response.ok) {
         throw new Error("Failed to communicate with runtime database services.");
       }

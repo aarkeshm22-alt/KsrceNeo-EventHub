@@ -102,7 +102,7 @@ const MentorRegister = () => {
     setOtpError("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/send-otp", {
+      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/auth/send-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -142,7 +142,7 @@ const MentorRegister = () => {
     setServerError("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/register/mentor", {
+      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/auth/register/mentor", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -178,7 +178,7 @@ const MentorRegister = () => {
     setServerError("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/send-otp", {
+      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/auth/send-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

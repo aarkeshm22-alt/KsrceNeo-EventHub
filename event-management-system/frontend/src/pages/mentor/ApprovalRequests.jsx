@@ -69,7 +69,7 @@ const ApprovalRequests = () => {
       setError(null);
 
       const response = await fetch(
-        `http://localhost:5000/api/registrations/personal-mentor-requests?mentorName=${encodeURIComponent(mentorName)}`,
+        `https://ksrceneo-eventhub.onrender.com/api/registrations/personal-mentor-requests?mentorName=${encodeURIComponent(mentorName)}`,
         {
           method: "GET",
           headers: {
@@ -103,7 +103,7 @@ const ApprovalRequests = () => {
   // ----------------------------------------------------------------
   const updateStatus = async (id, finalStatus) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/registrations/update-status/${id}`, {
+      const response = await fetch(`https://ksrceneo-eventhub.onrender.com/api/registrations/update-status/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

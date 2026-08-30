@@ -24,7 +24,7 @@ const StatusTracking = () => {
     try {
       setLoading(true);
       // Fetches registrations (using your global route or fallback route)
-      const response = await axios.get("http://localhost:5000/api/registrations");
+      const response = await axios.get("https://ksrceneo-eventhub.onrender.com/api/registrations");
 
       // Ensure data is array before updating pipeline nodes
       const data = Array.isArray(response.data) ? response.data : [];

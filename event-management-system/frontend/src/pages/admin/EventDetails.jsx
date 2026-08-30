@@ -117,8 +117,8 @@ const EventDetails = () => {
 
     try {
       const endpoint = editTargetData
-        ? `http://localhost:5000/api/events/update/${editTargetData._id}`
-        : "http://localhost:5000/api/events/create";
+        ? `https://ksrceneo-eventhub.onrender.com/api/events/update/${editTargetData._id}`
+        : "https://ksrceneo-eventhub.onrender.com/api/events/create";
 
       const method = editTargetData ? "PUT" : "POST";
 

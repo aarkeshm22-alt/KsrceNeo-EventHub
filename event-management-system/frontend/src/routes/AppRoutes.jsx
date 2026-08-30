@@ -41,7 +41,6 @@ import MentorDashboard from "../pages/mentor/Dashboard";
 import EventList from "../pages/mentor/EventList";
 import ApprovalRequests from "../pages/mentor/ApprovalRequests";
 import AssignedStudents from "../pages/mentor/AssignedStudents";
-import UpdateStatus from "../pages/mentor/UpdateStatus";
 
 /* Student Pages */
 import StudentDashboard from "../pages/student/Dashboard";
@@ -107,7 +106,6 @@ const AppRoutes = () => {
           <Route path="events" element={<EventList />} />
           <Route path="approvals" element={<ApprovalRequests />} />
           <Route path="students" element={<AssignedStudents />} />
-          <Route path="status" element={<UpdateStatus />} />
         </Route>
 
         {/* ============================================================ */}

@@ -28,7 +28,7 @@ import * as XLSX from 'xlsx';
 
 const SpocManagement = () => {
   const navigate = useNavigate();
-  const API_BASE_URL = 'http://localhost:5000/api/admin';
+  const API_BASE_URL = 'https://ksrceneo-eventhub.onrender.com/api/admin';
 
   const initialFormState = {
     firstName: '',

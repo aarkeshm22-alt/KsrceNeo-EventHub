@@ -45,7 +45,7 @@ const ViewSubmissions = () => {
   const fetchDistinctLevels = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:5000/api/events/distinct-levels", {
+      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/events/distinct-levels", {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (response.ok) {
@@ -76,7 +76,7 @@ const ViewSubmissions = () => {
       }).toString();
 
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:5000/api/registrations/view-submissions?${queryParams}`, {
+      const response = await fetch(`https://ksrceneo-eventhub.onrender.com/api/registrations/view-submissions?${queryParams}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
