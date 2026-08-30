@@ -1,0 +1,7 @@
+exclude:
+  - node_modules
+  - vendor
+  - Gemfile
+  - Gemfile.lock
+  - .bundle
+  - event-management-system/backend/node_modules
