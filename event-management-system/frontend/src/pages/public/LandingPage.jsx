@@ -240,7 +240,7 @@ const LandingPage = () => {
                 Events Directory
               </span>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
-                Active Events & Hackathons
+                Active Events
               </h2>
             </div>
             <p className="text-xs sm:text-sm font-bold text-slate-600 max-w-xs mx-auto md:mx-0">
