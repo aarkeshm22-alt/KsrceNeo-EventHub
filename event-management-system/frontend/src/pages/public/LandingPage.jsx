@@ -266,7 +266,7 @@ const LandingPage = () => {
           {!loading && !error && events.length === 0 && (
             <div className="p-12 bg-white border border-slate-200 rounded-2xl text-center space-y-2">
               <p className="text-slate-800 font-black text-base">No active events posted yet.</p>
-              <p className="text-slate-500 text-xs font-medium">Check back soon! Admins and Co-Admins are constantly adding new hackathons and ideathons.</p>
+              <p className="text-slate-500 text-xs font-medium">Check back soon! Admin and Co-Admin are constantly adding new events.</p>
             </div>
           )}
 
@@ -408,7 +408,7 @@ const LandingPage = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-amber-400 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all shadow-md group w-full sm:w-auto justify-center"
               >
-                Visit Official Portal (ksrceneo.com)
+                Visit our Official Website (ksrceneo.com)
                 <FaExternalLinkAlt className="text-[10px] group-hover:translate-x-0.5 transition-transform" />
               </a>
             </div>

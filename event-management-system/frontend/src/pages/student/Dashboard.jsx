@@ -123,8 +123,19 @@ const Dashboard = () => {
           <h1 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">
             Welcome back, {userName || "Student"} 👋
           </h1>
+          
+          {/* Updated Description and Notice */}
           <p className="text-sm text-slate-500 font-normal">Track your submission status, monitor event schedules, and view event details.</p>
+          
+          <div className="flex items-start gap-2 mt-3 p-3 bg-slate-50 border border-slate-200 rounded-xl">
+            <Sparkles size={12} className="text-slate-400 mt-0.5 shrink-0" />
+            <p className="text-xs text-slate-500 font-medium leading-relaxed">
+              <span className="font-bold text-slate-700">Notice:</span> This website is strictly used for submitting forms for department and college purposes only.
+            </p>
+          </div>
+          {/* End Notice */}
         </div>
+        
         <div className="flex items-center gap-3 shrink-0">
           <span className="text-xs font-semibold px-4 py-2 bg-slate-900 border border-slate-800 text-white rounded-xl shadow-sm tracking-wide font-mono">
             {currentDateTime || "SYNCING CLOCK..."}
