@@ -31,7 +31,6 @@ import EventManagement from "../pages/admin/EventManagement";
 import EventDetails from "../pages/admin/EventDetails";
 import StudentManagement from "../pages/admin/StudentManagement";
 import MentorManagement from "../pages/admin/MentorManagement";
-import Registrations from "../pages/admin/Registrations";
 import StatusTracking from "../pages/admin/StatusTracking";
 import ViewSubmissions from "../pages/admin/ViewSubmissions";
 import SpocManagement from "../pages/admin/SpocManagement";
