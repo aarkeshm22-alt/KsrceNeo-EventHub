@@ -215,7 +215,7 @@ const EventManagement = () => {
     }
     if (!window.confirm("Are you sure you want to completely terminate this event track from database permanently?")) return;
     try {
-      const response = await fetch(`http://localhost:5000/api/events/${id}`, {
+      const response = await fetch(`https://ksrceneo-eventhub.onrender.com/api/events/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token") || ""}` }
       });
