@@ -540,7 +540,7 @@ export const sendWelcomeEmail = async (req, res) => {
               <li>Scroll to the <strong>Update Password</strong> section.</li>
               <li>Set a new, secure password.</li>
             </ol>
-            <p>You can access the portal at: <a href="https://your-portal-url.com" target="_blank">https://your-portal-url.com</a></p>
+            <p>You can access the portal at: <a href="https://ksrceneo-eventhub.vercel.app" target="_blank">https://ksrceneo-eventhub.vercel.app/</a></p>
             <p style="margin-top: 20px;">Welcome aboard! We look forward to your contributions.</p>
             <p>Regards,<br><strong>KSRCE NEO Event Hub Team</strong></p>
           </div>
