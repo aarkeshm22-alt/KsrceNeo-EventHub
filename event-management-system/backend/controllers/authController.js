@@ -227,41 +227,114 @@ export const sendOTP = async (req, res) => {
     console.log(`📧 OTP for ${email}: ${otp}`); // for debugging
 
     // Send email
+        // Send email (Updated for Mobile, Tablet & Desktop)
     const html = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8fafc; border-radius: 12px;">
-        <div style="text-align: center; padding: 20px 0;">
-          <h1 style="color: #1e293b; font-size: 24px; margin: 0;">KSRCE NEO Portal</h1>
-          <p style="color: #64748b; font-size: 14px; margin: 5px 0;">One‑Time Verification Code</p>
-        </div>
-        <div style="background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-          <p style="color: #334155; font-size: 16px; line-height: 1.6;">
-            Hello <strong>${name || 'User'}</strong>,
-          </p>
-          <p style="color: #334155; font-size: 16px; line-height: 1.6;">
-            Use the following OTP to complete your registration:
-          </p>
-          <div style="text-align: center; margin: 30px 0; padding: 20px; background-color: #f1f5f9; border-radius: 12px; border: 2px dashed #2563eb;">
-            <span style="font-size: 36px; font-weight: bold; color: #2563eb; letter-spacing: 8px; font-family: monospace;">
-              ${otp}
-            </span>
-          </div>
-          <p style="color: #64748b; font-size: 14px; line-height: 1.6;">
-            This OTP will expire in <strong>5 minutes</strong>.
-          </p>
-          <p style="color: #64748b; font-size: 14px; line-height: 1.6;">
-            If you didn't request this, please ignore this email.
-          </p>
-        </div>
-        <div style="text-align: center; padding: 20px 0; color: #94a3b8; font-size: 12px;">
-          <p>&copy; 2026 KSRCE NEO Portal. All rights reserved.</p>
-        </div>
-      </div>
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>OTP Verification</title>
+        <!-- [if mso]>
+        <noscript>
+          <xml>
+            <o:OfficeDocumentSettings>
+              <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+          </xml>
+        </noscript>
+        <![endif] -->
+        <style>
+          /* Email clients that support media queries (e.g., iOS, Apple Mail, Gmail App) */
+          @media screen and (max-width: 600px) {
+            .container {
+              width: 100% !important;
+              border-radius: 0 !important;
+            }
+            .inner-padding {
+              padding: 20px !important;
+            }
+            .otp-code {
+              font-size: 28px !important; 
+              letter-spacing: 4px !important;
+            }
+            h1 {
+              font-size: 20px !important;
+            }
+            .button {
+              width: 100% !important;
+              display: block !important;
+            }
+          }
+        </style>
+      </head>
+      <body style="margin: 0; padding: 0; background-color: #f8fafc;">
+        <!-- Main Wrapper (Fluid Width, Max 600px for desktop, 100% for mobile) -->
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc; padding: 20px 0;">
+          <tr>
+            <td align="center" style="padding: 10px;">
+              <table class="container" border="0" cellpadding="0" cellspacing="0" width="600" style="max-width: 600px; width: 100%; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <!-- Header -->
+                <tr>
+                  <td align="center" style="padding: 24px 20px; background-color: #2563eb;">
+                    <h1 style="margin: 0; color: #ffffff; font-family: Arial, sans-serif; font-size: 24px; font-weight: bold;">KSRCE NEO Event Hub</h1>
+                    <p style="margin: 5px 0 0; color: #e0e7ff; font-family: Arial, sans-serif; font-size: 14px;">One‑Time Verification Code</p>
+                  </td>
+                </tr>
+                
+                <!-- Body (Responsive Padding) -->
+                <tr>
+                  <td class="inner-padding" align="left" style="padding: 30px; font-family: Arial, sans-serif;">
+                    <p style="color: #334155; font-size: 16px; line-height: 1.6; margin: 0 0 20px;">
+                      Hello <strong>${name || 'User'}</strong>,
+                    </p>
+                    <p style="color: #334155; font-size: 16px; line-height: 1.6; margin: 0 0 20px;">
+                      Use the following OTP to complete your registration:
+                    </p>
+                    
+                    <!-- OTP Box -->
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin: 20px 0;">
+                      <tr>
+                        <td align="center" style="padding: 20px; background-color: #f1f5f9; border-radius: 12px; border: 2px dashed #2563eb;">
+                          <span class="otp-code" style="font-size: 36px; font-weight: bold; color: #2563eb; letter-spacing: 8px; font-family: 'Courier New', monospace; line-height: 1.2;">
+                            ${otp}
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                    
+                    <p style="color: #64748b; font-size: 14px; line-height: 1.6; margin: 0 0 10px;">
+                      This OTP will expire in <strong>5 minutes</strong>.
+                    </p>
+                    <p style="color: #64748b; font-size: 14px; line-height: 1.6; margin: 0;">
+                      If you didn't request this, please ignore this email.
+                    </p>
+                    <p style="color: #334155; font-size: 16px; line-height: 1.6; margin: 20px 0 0;">
+                      Regards,<br>
+                      <strong>KSRCE NEO Event Hub Team</strong>
+                    </p>
+                  </td>
+                </tr>
+                
+                <!-- Footer -->
+                <tr>
+                  <td align="center" style="padding: 20px; background-color: #f8fafc; color: #94a3b8; font-family: Arial, sans-serif; font-size: 12px;">
+                    <p style="margin: 0;">&copy; 2026 KSRCE NEO Event Hub. All rights reserved.</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </body>
+      </html>
     `;
 
     const result = await sendEmail({
-      from: `KSRCE NEO Portal <${process.env.EMAIL_USER}>`,
+      from: `KSRCE NEO Event Hub <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: 'KSRCE NEO Portal - OTP Verification',
+      subject: 'KSRCE NEO Event Hub - OTP Verification',
       html,
     });
 
@@ -352,9 +425,9 @@ export const resendOTP = async (req, res) => {
     const html = `...`; // same as sendOTP
 
     const result = await sendEmail({
-      from: `KSRCE NEO Portal <${process.env.EMAIL_USER}>`,
+      from: `KSRCE NEO Event Hub <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: 'KSRCE NEO Portal - New OTP',
+      subject: 'KSRCE NEO Event Hub - New OTP',
       html,
     });
 
