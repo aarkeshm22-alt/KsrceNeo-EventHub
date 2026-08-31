@@ -84,7 +84,6 @@ const AppRoutes = () => {
           <Route path="events/manage" element={<EventDetails />} />
           <Route path="students" element={<StudentManagement />} />
           <Route path="mentors" element={<MentorManagement />} />
-          <Route path="registrations" element={<Registrations />} />
           <Route path="status" element={<StatusTracking />} />
           <Route path="submissions" element={<ViewSubmissions />} />
           <Route path="spoc" element={<SpocManagement />} />
