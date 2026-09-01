@@ -348,8 +348,7 @@ const EventManagement = () => {
             <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 text-slate-400 flex items-center justify-center mx-auto mb-4">
               <FaRegFolderOpen size={18} />
             </div>
-            <p className="text-sm font-bold text-slate-900">No Events Found</p>
-            <p className="text-xs text-slate-400 mt-1">Check your database or create a new event.</p>
+            <p className="text-sm font-bold text-slate-900">No Events Found..!</p>
           </motion.div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8">

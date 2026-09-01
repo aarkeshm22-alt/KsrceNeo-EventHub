@@ -149,10 +149,7 @@ const EventManagement = () => {
                 <FaRegCalendarPlus size={16} />
               </div>
               <div className="space-y-1">
-                <p className="text-sm font-bold text-slate-700">No matching events discovered</p>
-                <p className="text-xs text-slate-400 max-w-xs mx-auto font-medium leading-relaxed">
-                  Modify your keywords or click the "Add New Event" trigger to draft a new technical registration track.
-                </p>
+                <p className="text-sm font-bold text-slate-700">No Events Found..!</p>
               </div>
             </div>
           )}
