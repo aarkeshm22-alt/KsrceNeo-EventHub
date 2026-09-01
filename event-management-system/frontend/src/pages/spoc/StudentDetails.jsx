@@ -148,7 +148,7 @@ const SpocStudentsDetails = () => {
           <div className="bg-amber-50/50 border border-amber-200 rounded-2xl p-12 text-center max-w-xl mx-auto space-y-3">
             <FaTriangleExclamation className="text-amber-500 text-3xl mx-auto" />
             <div className="space-y-1">
-              <p className="text-sm font-bold text-amber-900">No students found</p>
+              <p className="text-sm font-bold text-amber-900">No Students found..!</p>
               <p className="text-xs text-amber-700/80 font-medium max-w-xs mx-auto">
                 The system could not find any students in your department.
                 {spocDept && (

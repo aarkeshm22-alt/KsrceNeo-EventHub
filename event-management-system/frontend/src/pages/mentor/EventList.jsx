@@ -102,10 +102,8 @@ const EventManagement = () => {
                 <FaRegCalendarPlus size={16} />
               </div>
               <div className="space-y-1">
-                <p className="text-sm font-bold text-slate-700">No matching events discovered</p>
-                <p className="text-xs text-slate-400 max-w-xs mx-auto font-medium leading-relaxed">
-                  Modify your keywords to find existing events.
-                </p>
+                <p className="text-sm font-bold text-slate-700">No</p>
+                <p className="text-xs text-slate-400">Events found..!</p>
               </div>
             </div>
           )}

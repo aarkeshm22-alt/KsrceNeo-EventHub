@@ -384,8 +384,7 @@ const SpocApproval = () => {
                   <motion.tr key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                     <td colSpan="8" className="py-16 text-center text-slate-400">
                       <div className="flex flex-col items-center gap-2">
-                        <p className="font-extrabold uppercase tracking-wider text-[11px]">No registrations found for your department</p>
-                        <p className="text-xs font-medium">Try adjusting your filters or search term.</p>
+                        <p className="font-extrabold uppercase tracking-wider text-[11px]">No registrations found for your department..!</p>
                         {(statusFilter !== "All" || searchQuery) && (
                           <button
                             onClick={resetFilters}

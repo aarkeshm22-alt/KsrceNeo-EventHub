@@ -410,7 +410,7 @@ const StudentManagement = () => {
                     <td colSpan="6" className="py-12 text-center text-slate-400">
                       <div className="flex flex-col items-center justify-center gap-2">
                         <FaGraduationCap size={28} className="text-slate-200" />
-                        <p className="text-xs font-bold text-slate-400">No student records match your filters.</p>
+                        <p className="text-xs font-bold text-slate-400">No {' '} <span className="text-amber-500">Student</span> records found..!</p>
                       </div>
                     </td>
                   </motion.tr>

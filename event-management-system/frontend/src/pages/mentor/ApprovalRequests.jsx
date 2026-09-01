@@ -224,10 +224,7 @@ const ApprovalRequests = () => {
                       <td colSpan="8" className="py-16 text-center">
                         <div className="flex flex-col items-center gap-2">
                           <FaInbox size={32} className="text-slate-300" />
-                          <p className="text-sm font-bold text-slate-700">No submissions from your mentees</p>
-                          <p className="text-xs text-slate-400 max-w-xs">
-                            Students have not yet submitted any registrations with you as their personal mentor.
-                          </p>
+                          <p className="text-sm font-bold text-slate-700">No submissions from your mentees..!</p>
                         </div>
                       </td>
                     </tr>

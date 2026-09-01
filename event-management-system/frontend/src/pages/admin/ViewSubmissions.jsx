@@ -440,7 +440,7 @@ const ViewSubmissions = () => {
                 ) : eventData.length === 0 ? (
                   <tr>
                     <td colSpan="10" className="py-20 text-center text-slate-400 font-extrabold uppercase tracking-wider text-[11px]">
-                      No entries found matching active filtering query parameters.
+                      No {' '} <span className="text-amber-500">Submission</span> records found..!
                     </td>
                   </tr>
                 ) : (
