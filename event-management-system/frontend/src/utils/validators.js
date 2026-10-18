@@ -1,6 +1,6 @@
 export const validateKsrceEmail =
 (email) => {
-  return /^[a-zA-Z0-9._%+-]+@ksrce\.ac\.in$/.test(
+  return /^[a-zA-Z0-9._%+-]+@(ksrce\.ac\.in|ksriet\.ac\.in)$/.test(
     email
   );
 };

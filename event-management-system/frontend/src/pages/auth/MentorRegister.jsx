@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { 
-  FaUser, 
-  FaPhone, 
-  FaBuilding, 
-  FaEnvelope, 
-  FaLock, 
-  FaCheckCircle, 
+import {
+  FaUser,
+  FaPhone,
+  FaBuilding,
+  FaEnvelope,
+  FaLock,
+  FaCheckCircle,
   FaSpinner,
   FaInfoCircle,
   FaArrowLeft,
@@ -52,13 +52,17 @@ const MentorRegister = () => {
   }, [otpResendCooldown]);
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+    // Normalise email so users can't bypass the domain check with caps/spaces
+    const nextValue = name === "email" ? value.trim().toLowerCase() : value;
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: nextValue,
     });
     setErrors({
       ...errors,
-      [e.target.name]: "",
+      [name]: "",
     });
     if (serverError) setServerError("");
   };
@@ -78,11 +82,16 @@ const MentorRegister = () => {
     if (!formData.department) {
       newErrors.department = "Please select your department";
     }
-    if (!/^[a-zA-Z0-9._%+-]+@ksrce\.ac\.in$/.test(formData.email)) {
-      newErrors.email = "Please use your official @ksrce.ac.in email address";
+    // ✅ Accepts @ksrce.ac.in OR @ksriet.ac.in
+    if (
+      !/^[a-zA-Z0-9._%+-]+@(ksrce\.ac\.in|ksriet\.ac\.in)$/.test(formData.email)
+    ) {
+      newErrors.email =
+        "Please use your official college email (@ksrce.ac.in or @ksriet.ac.in)";
     }
     if (!/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{6,8}$/.test(formData.password)) {
-      newErrors.password = "Must be 6-8 letters long with 1 uppercase, 1 number, and 1 special symbol";
+      newErrors.password =
+        "Must be 6-8 letters long with 1 uppercase, 1 number, and 1 special symbol";
     }
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";
@@ -102,16 +111,19 @@ const MentorRegister = () => {
     setOtpError("");
 
     try {
-      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/auth/send-otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          name: `${formData.firstName} ${formData.lastName}`,
-        }),
-      });
+      const response = await fetch(
+        "https://ksrceneo-eventhub.onrender.com/api/auth/send-otp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            name: `${formData.firstName} ${formData.lastName}`,
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -142,21 +154,26 @@ const MentorRegister = () => {
     setServerError("");
 
     try {
-      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/auth/register/mentor", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          otp: otp,
-        }),
-      });
+      const response = await fetch(
+        "https://ksrceneo-eventhub.onrender.com/api/auth/register/mentor",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...formData,
+            otp: otp,
+          }),
+        }
+      );
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Registration failed. Please check your OTP.");
+        throw new Error(
+          data.message || "Registration failed. Please check your OTP."
+        );
       }
 
       navigate("/login", {
@@ -178,16 +195,19 @@ const MentorRegister = () => {
     setServerError("");
 
     try {
-      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/auth/send-otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          name: `${formData.firstName} ${formData.lastName}`,
-        }),
-      });
+      const response = await fetch(
+        "https://ksrceneo-eventhub.onrender.com/api/auth/send-otp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            name: `${formData.firstName} ${formData.lastName}`,
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -231,17 +251,37 @@ const MentorRegister = () => {
 
         {/* Step Indicator */}
         <div className="flex items-center justify-center mb-4 gap-3 text-xs font-bold">
-          <div className={`flex items-center gap-2 ${step === "form" ? "text-slate-900" : "text-slate-400"}`}>
-            <span className={`w-6 h-6 rounded-full flex items-center justify-center ${
-              step === "form" ? "bg-slate-900 text-amber-400" : "bg-slate-200 text-slate-500"
-            }`}>1</span>
+          <div
+            className={`flex items-center gap-2 ${
+              step === "form" ? "text-slate-900" : "text-slate-400"
+            }`}
+          >
+            <span
+              className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                step === "form"
+                  ? "bg-slate-900 text-amber-400"
+                  : "bg-slate-200 text-slate-500"
+              }`}
+            >
+              1
+            </span>
             <span>Details</span>
           </div>
           <div className="w-8 h-0.5 bg-slate-300" />
-          <div className={`flex items-center gap-2 ${step === "otp" ? "text-slate-900" : "text-slate-400"}`}>
-            <span className={`w-6 h-6 rounded-full flex items-center justify-center ${
-              step === "otp" ? "bg-slate-900 text-amber-400" : "bg-slate-200 text-slate-500"
-            }`}>2</span>
+          <div
+            className={`flex items-center gap-2 ${
+              step === "otp" ? "text-slate-900" : "text-slate-400"
+            }`}
+          >
+            <span
+              className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                step === "otp"
+                  ? "bg-slate-900 text-amber-400"
+                  : "bg-slate-200 text-slate-500"
+              }`}
+            >
+              2
+            </span>
             <span>Verify OTP</span>
           </div>
         </div>
@@ -255,13 +295,35 @@ const MentorRegister = () => {
             </div>
             <ul className="list-disc pl-5 text-xs space-y-1.5 text-slate-600">
               <li>
-                You must use your official college email ID (<span className="font-semibold text-slate-900">@ksrce.ac.in</span>) only.
+                You must use your official college email ID —{" "}
+                <span className="font-semibold text-slate-900">
+                  @ksrce.ac.in
+                </span>{" "}
+                or{" "}
+                <span className="font-semibold text-slate-900">
+                  @ksriet.ac.in
+                </span>{" "}
+                only.
               </li>
               <li>
-                Password length must be strictly between <span className="font-semibold text-slate-900">6 to 8 characters</span>.
+                Password length must be strictly between{" "}
+                <span className="font-semibold text-slate-900">
+                  6 to 8 characters
+                </span>
+                .
               </li>
               <li>
-                Password must contain at least <span className="font-semibold text-slate-900">1 uppercase letter</span>, <span className="font-semibold text-slate-900">1 number</span>, and <span className="font-semibold text-slate-900">1 special symbol</span> (e.g., @, $, !, %, *, ?, &).
+                Password must contain at least{" "}
+                <span className="font-semibold text-slate-900">
+                  1 uppercase letter
+                </span>
+                ,{" "}
+                <span className="font-semibold text-slate-900">1 number</span>,
+                and{" "}
+                <span className="font-semibold text-slate-900">
+                  1 special symbol
+                </span>{" "}
+                (e.g., @, $, !, %, *, ?, &).
               </li>
             </ul>
           </div>
@@ -276,10 +338,15 @@ const MentorRegister = () => {
 
         {/* ===== STEP 1: FORM ===== */}
         {step === "form" && (
-          <form onSubmit={handleSendOtp} className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <form
+            onSubmit={handleSendOtp}
+            className="grid grid-cols-1 md:grid-cols-2 gap-5"
+          >
             {/* First Name */}
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-600 block">First Name</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                First Name
+              </label>
               <div className="relative">
                 <FaUser className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <input
@@ -290,16 +357,22 @@ const MentorRegister = () => {
                   value={formData.firstName}
                   onChange={handleChange}
                   className={`w-full bg-slate-50 border ${
-                    errors.firstName ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    errors.firstName
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all disabled:opacity-60`}
                 />
               </div>
-              {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>}
+              {errors.firstName && (
+                <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>
+              )}
             </div>
 
             {/* Last Name */}
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-600 block">Last Name</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                Last Name
+              </label>
               <div className="relative">
                 <FaUser className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <input
@@ -310,16 +383,22 @@ const MentorRegister = () => {
                   value={formData.lastName}
                   onChange={handleChange}
                   className={`w-full bg-slate-50 border ${
-                    errors.lastName ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    errors.lastName
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all disabled:opacity-60`}
                 />
               </div>
-              {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>}
+              {errors.lastName && (
+                <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>
+              )}
             </div>
 
             {/* Mobile Number */}
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-600 block">Phone Number</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                Phone Number
+              </label>
               <div className="relative">
                 <FaPhone className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <input
@@ -331,16 +410,22 @@ const MentorRegister = () => {
                   onChange={handleChange}
                   maxLength="10"
                   className={`w-full bg-slate-50 border ${
-                    errors.mobile ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    errors.mobile
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all disabled:opacity-60`}
                 />
               </div>
-              {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
+              {errors.mobile && (
+                <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>
+              )}
             </div>
 
             {/* Department Selection */}
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-600 block">Department</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                Department
+              </label>
               <div className="relative">
                 <FaBuilding className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <select
@@ -349,7 +434,9 @@ const MentorRegister = () => {
                   value={formData.department}
                   onChange={handleChange}
                   className={`w-full bg-slate-50 border ${
-                    errors.department ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    errors.department
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all appearance-none disabled:opacity-60`}
                 >
                   <option value="">Choose department</option>
@@ -368,34 +455,48 @@ const MentorRegister = () => {
                   <option value="MCA">MCA</option>
                   <option value="MBA">MBA</option>
                 </select>
-                <div className="absolute right-4 top-3.5 pointer-events-none text-xs text-slate-400">▼</div>
+                <div className="absolute right-4 top-3.5 pointer-events-none text-xs text-slate-400">
+                  ▼
+                </div>
               </div>
-              {errors.department && <p className="text-red-500 text-xs mt-1">{errors.department}</p>}
+              {errors.department && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.department}
+                </p>
+              )}
             </div>
 
             {/* Email Address */}
             <div className="space-y-1 md:col-span-2">
-              <label className="text-xs font-semibold text-slate-600 block">College Email ID</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                College Email ID
+              </label>
               <div className="relative">
                 <FaEnvelope className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <input
                   type="email"
                   name="email"
-                  placeholder="eg. name@ksrce.ac.in"
+                  placeholder="eg. name@ksrce.ac.in or name@ksriet.ac.in"
                   disabled={isSendingOtp}
                   value={formData.email}
                   onChange={handleChange}
                   className={`w-full bg-slate-50 border ${
-                    errors.email ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    errors.email
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all disabled:opacity-60`}
                 />
               </div>
-              {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+              )}
             </div>
 
             {/* Password */}
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-600 block">Password</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                Password
+              </label>
               <div className="relative">
                 <FaLock className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <input
@@ -406,16 +507,22 @@ const MentorRegister = () => {
                   value={formData.password}
                   onChange={handleChange}
                   className={`w-full bg-slate-50 border ${
-                    errors.password ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    errors.password
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all disabled:opacity-60`}
                 />
               </div>
-              {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+              )}
             </div>
 
             {/* Confirm Password */}
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-600 block">Confirm Password</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                Confirm Password
+              </label>
               <div className="relative">
                 <FaLock className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <input
@@ -426,11 +533,17 @@ const MentorRegister = () => {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   className={`w-full bg-slate-50 border ${
-                    errors.confirmPassword ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    errors.confirmPassword
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all disabled:opacity-60`}
                 />
               </div>
-              {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.confirmPassword}
+                </p>
+              )}
             </div>
 
             {/* Send OTP Button */}
@@ -461,14 +574,17 @@ const MentorRegister = () => {
           <form onSubmit={handleVerifyAndRegister} className="space-y-5">
             <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl">
               <p className="text-xs text-slate-600 text-center">
-                We've sent a one‑time verification code to <strong>{formData.email}</strong>.
+                We've sent a one‑time verification code to{" "}
+                <strong>{formData.email}</strong>.
                 <br />
                 Please enter it below to complete your registration.
               </p>
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-600 block">OTP Code</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                OTP Code
+              </label>
               <div className="relative">
                 <FaLock className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <input
@@ -481,12 +597,16 @@ const MentorRegister = () => {
                   placeholder="Enter 6‑digit OTP"
                   maxLength="6"
                   className={`w-full bg-slate-50 border ${
-                    otpError ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    otpError
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all`}
                   required
                 />
               </div>
-              {otpError && <p className="text-red-500 text-xs mt-1">{otpError}</p>}
+              {otpError && (
+                <p className="text-red-500 text-xs mt-1">{otpError}</p>
+              )}
             </div>
 
             {/* Action Buttons */}
@@ -527,10 +647,14 @@ const MentorRegister = () => {
                 onClick={handleResendOtp}
                 disabled={otpResendCooldown > 0 || isSendingOtp}
                 className={`text-amber-600 font-semibold hover:underline transition-colors ${
-                  otpResendCooldown > 0 ? "cursor-not-allowed opacity-60" : ""
+                  otpResendCooldown > 0
+                    ? "cursor-not-allowed opacity-60"
+                    : ""
                 }`}
               >
-                {otpResendCooldown > 0 ? `Resend in ${otpResendCooldown}s` : "Resend OTP"}
+                {otpResendCooldown > 0
+                  ? `Resend in ${otpResendCooldown}s`
+                  : "Resend OTP"}
               </button>
             </div>
           </form>
@@ -540,7 +664,10 @@ const MentorRegister = () => {
         <div className="text-center mt-6 pt-4 border-t border-slate-100 text-sm text-slate-500">
           <p>
             Already have an account?{" "}
-            <Link to="/login" className="text-amber-600 font-semibold hover:underline">
+            <Link
+              to="/login"
+              className="text-amber-600 font-semibold hover:underline"
+            >
               Log In
             </Link>
           </p>

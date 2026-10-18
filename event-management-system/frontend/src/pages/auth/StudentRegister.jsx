@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { 
-  FaUser, 
-  FaIdCard, 
-  FaBuilding, 
-  FaCalendarAlt, 
-  FaLayerGroup, 
-  FaPhone, 
-  FaEnvelope, 
-  FaLock, 
+import {
+  FaUser,
+  FaIdCard,
+  FaBuilding,
+  FaCalendarAlt,
+  FaLayerGroup,
+  FaPhone,
+  FaEnvelope,
+  FaLock,
   FaCheckCircle,
   FaSpinner,
   FaInfoCircle,
   FaArrowLeft,
-  FaSync
+  FaSync,
 } from "react-icons/fa";
 
 import {
@@ -64,13 +64,17 @@ const StudentRegister = () => {
   }, [otpResendCooldown]);
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+    // Normalise email to lowercase + trimmed so users can't bypass the domain check with caps/spaces
+    const nextValue = name === "email" ? value.trim().toLowerCase() : value;
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: nextValue,
     });
     setErrors({
       ...errors,
-      [e.target.name]: "",
+      [name]: "",
     });
     if (serverError) setServerError("");
   };
@@ -97,7 +101,8 @@ const StudentRegister = () => {
       newErrors.mobile = "Mobile Number must be exactly 10 digits";
     }
     if (!validateKsrceEmail(formData.email)) {
-      newErrors.email = "Please use a valid @ksrce.ac.in student email";
+      newErrors.email =
+        "Please use your official college email (@ksrce.ac.in or @ksriet.ac.in)";
     }
     if (!validatePassword(formData.password)) {
       newErrors.password = "Password must meet college security rules";
@@ -120,16 +125,19 @@ const StudentRegister = () => {
     setOtpError("");
 
     try {
-      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/auth/send-otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          name: formData.name,
-        }),
-      });
+      const response = await fetch(
+        "https://ksrceneo-eventhub.onrender.com/api/auth/send-otp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            name: formData.name,
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -160,21 +168,26 @@ const StudentRegister = () => {
     setServerError("");
 
     try {
-      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/auth/register/student", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          otp: otp,
-        }),
-      });
+      const response = await fetch(
+        "https://ksrceneo-eventhub.onrender.com/api/auth/register/student",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...formData,
+            otp: otp,
+          }),
+        }
+      );
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Registration failed. Please check your OTP.");
+        throw new Error(
+          data.message || "Registration failed. Please check your OTP."
+        );
       }
 
       // Success: redirect to login
@@ -197,16 +210,19 @@ const StudentRegister = () => {
     setServerError("");
 
     try {
-      const response = await fetch("https://ksrceneo-eventhub.onrender.com/api/auth/send-otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          name: formData.name,
-        }),
-      });
+      const response = await fetch(
+        "https://ksrceneo-eventhub.onrender.com/api/auth/send-otp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            name: formData.name,
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -250,17 +266,37 @@ const StudentRegister = () => {
 
         {/* Step Indicator */}
         <div className="flex items-center justify-center mb-4 gap-3 text-xs font-bold">
-          <div className={`flex items-center gap-2 ${step === "form" ? "text-slate-900" : "text-slate-400"}`}>
-            <span className={`w-6 h-6 rounded-full flex items-center justify-center ${
-              step === "form" ? "bg-slate-900 text-amber-400" : "bg-slate-200 text-slate-500"
-            }`}>1</span>
+          <div
+            className={`flex items-center gap-2 ${
+              step === "form" ? "text-slate-900" : "text-slate-400"
+            }`}
+          >
+            <span
+              className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                step === "form"
+                  ? "bg-slate-900 text-amber-400"
+                  : "bg-slate-200 text-slate-500"
+              }`}
+            >
+              1
+            </span>
             <span>Details</span>
           </div>
           <div className="w-8 h-0.5 bg-slate-300" />
-          <div className={`flex items-center gap-2 ${step === "otp" ? "text-slate-900" : "text-slate-400"}`}>
-            <span className={`w-6 h-6 rounded-full flex items-center justify-center ${
-              step === "otp" ? "bg-slate-900 text-amber-400" : "bg-slate-200 text-slate-500"
-            }`}>2</span>
+          <div
+            className={`flex items-center gap-2 ${
+              step === "otp" ? "text-slate-900" : "text-slate-400"
+            }`}
+          >
+            <span
+              className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                step === "otp"
+                  ? "bg-slate-900 text-amber-400"
+                  : "bg-slate-200 text-slate-500"
+              }`}
+            >
+              2
+            </span>
             <span>Verify OTP</span>
           </div>
         </div>
@@ -274,13 +310,35 @@ const StudentRegister = () => {
             </div>
             <ul className="list-disc pl-5 text-xs space-y-1.5 text-slate-600">
               <li>
-                You must use your official college email ID (<span className="font-semibold text-slate-900">@ksrce.ac.in</span>) only.
+                You must use your official college email ID —{" "}
+                <span className="font-semibold text-slate-900">
+                  @ksrce.ac.in
+                </span>{" "}
+                or{" "}
+                <span className="font-semibold text-slate-900">
+                  @ksriet.ac.in
+                </span>{" "}
+                only.
               </li>
               <li>
-                Password length must be strictly between <span className="font-semibold text-slate-900">6 to 8 characters</span>.
+                Password length must be strictly between{" "}
+                <span className="font-semibold text-slate-900">
+                  6 to 8 characters
+                </span>
+                .
               </li>
               <li>
-                Password must contain at least <span className="font-semibold text-slate-900">1 uppercase letter</span>, <span className="font-semibold text-slate-900">1 number</span>, and <span className="font-semibold text-slate-900">1 special symbol</span> (e.g., @, $, !, %, *, ?, &).
+                Password must contain at least{" "}
+                <span className="font-semibold text-slate-900">
+                  1 uppercase letter
+                </span>
+                ,{" "}
+                <span className="font-semibold text-slate-900">1 number</span>,
+                and{" "}
+                <span className="font-semibold text-slate-900">
+                  1 special symbol
+                </span>{" "}
+                (e.g., @, $, !, %, *, ?, &).
               </li>
             </ul>
           </div>
@@ -295,10 +353,15 @@ const StudentRegister = () => {
 
         {/* ===== STEP 1: FORM ===== */}
         {step === "form" && (
-          <form onSubmit={handleSendOtp} className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <form
+            onSubmit={handleSendOtp}
+            className="grid grid-cols-1 md:grid-cols-2 gap-5"
+          >
             {/* Student Name */}
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-600 block">Full Name</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                Full Name
+              </label>
               <div className="relative">
                 <FaUser className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <input
@@ -309,16 +372,22 @@ const StudentRegister = () => {
                   value={formData.name}
                   onChange={handleChange}
                   className={`w-full bg-slate-50 border ${
-                    errors.name ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    errors.name
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all disabled:opacity-60`}
                 />
               </div>
-              {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+              {errors.name && (
+                <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+              )}
             </div>
 
             {/* Register Number */}
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-600 block">Register Number</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                Register Number
+              </label>
               <div className="relative">
                 <FaIdCard className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <input
@@ -329,16 +398,22 @@ const StudentRegister = () => {
                   value={formData.regNo}
                   onChange={handleChange}
                   className={`w-full bg-slate-50 border ${
-                    errors.regNo ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    errors.regNo
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all disabled:opacity-60`}
                 />
               </div>
-              {errors.regNo && <p className="text-red-500 text-xs mt-1">{errors.regNo}</p>}
+              {errors.regNo && (
+                <p className="text-red-500 text-xs mt-1">{errors.regNo}</p>
+              )}
             </div>
 
             {/* Department Selection */}
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-600 block">Department</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                Department
+              </label>
               <div className="relative">
                 <FaBuilding className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <select
@@ -347,7 +422,9 @@ const StudentRegister = () => {
                   value={formData.department}
                   onChange={handleChange}
                   className={`w-full bg-slate-50 border ${
-                    errors.department ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    errors.department
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all appearance-none disabled:opacity-60`}
                 >
                   <option value="">Choose department</option>
@@ -366,14 +443,22 @@ const StudentRegister = () => {
                   <option value="MCA">MCA</option>
                   <option value="MBA">MBA</option>
                 </select>
-                <div className="absolute right-4 top-3.5 pointer-events-none text-xs text-slate-400">▼</div>
+                <div className="absolute right-4 top-3.5 pointer-events-none text-xs text-slate-400">
+                  ▼
+                </div>
               </div>
-              {errors.department && <p className="text-red-500 text-xs mt-1">{errors.department}</p>}
+              {errors.department && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.department}
+                </p>
+              )}
             </div>
 
             {/* Year Selection */}
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-600 block">Current Year</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                Current Year
+              </label>
               <div className="relative">
                 <FaCalendarAlt className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <select
@@ -382,7 +467,9 @@ const StudentRegister = () => {
                   value={formData.year}
                   onChange={handleChange}
                   className={`w-full bg-slate-50 border ${
-                    errors.year ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    errors.year
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all appearance-none disabled:opacity-60`}
                 >
                   <option value="">Choose year</option>
@@ -391,35 +478,47 @@ const StudentRegister = () => {
                   <option value="III">III</option>
                   <option value="IV">IV</option>
                 </select>
-                <div className="absolute right-4 top-3.5 pointer-events-none text-xs text-slate-400">▼</div>
+                <div className="absolute right-4 top-3.5 pointer-events-none text-xs text-slate-400">
+                  ▼
+                </div>
               </div>
-              {errors.year && <p className="text-red-500 text-xs mt-1">{errors.year}</p>}
+              {errors.year && (
+                <p className="text-red-500 text-xs mt-1">{errors.year}</p>
+              )}
             </div>
 
             {/* Section */}
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-600 block">Section</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                Section
+              </label>
               <div className="relative">
                 <FaLayerGroup className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <input
                   type="text"
                   name="section"
                   disabled={isSendingOtp}
-                  placeholder="eg. A, B,C or D"
+                  placeholder="eg. A, B, C or D"
                   maxLength="3"
                   value={formData.section}
                   onChange={handleChange}
                   className={`w-full bg-slate-50 border ${
-                    errors.section ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    errors.section
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all disabled:opacity-60`}
                 />
               </div>
-              {errors.section && <p className="text-red-500 text-xs mt-1">{errors.section}</p>}
+              {errors.section && (
+                <p className="text-red-500 text-xs mt-1">{errors.section}</p>
+              )}
             </div>
 
             {/* Phone Number */}
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-600 block">Phone Number</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                Phone Number
+              </label>
               <div className="relative">
                 <FaPhone className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <input
@@ -431,36 +530,48 @@ const StudentRegister = () => {
                   value={formData.mobile}
                   onChange={handleChange}
                   className={`w-full bg-slate-50 border ${
-                    errors.mobile ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    errors.mobile
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all disabled:opacity-60`}
                 />
               </div>
-              {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>}
+              {errors.mobile && (
+                <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>
+              )}
             </div>
 
             {/* Email Address */}
             <div className="space-y-1 md:col-span-2">
-              <label className="text-xs font-semibold text-slate-600 block">College Email ID</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                College Email ID
+              </label>
               <div className="relative">
                 <FaEnvelope className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <input
                   type="email"
                   name="email"
                   disabled={isSendingOtp}
-                  placeholder="eg. yourname@ksrce.ac.in"
+                  placeholder="eg. yourname@ksrce.ac.in or yourname@ksriet.ac.in"
                   value={formData.email}
                   onChange={handleChange}
                   className={`w-full bg-slate-50 border ${
-                    errors.email ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    errors.email
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all disabled:opacity-60`}
                 />
               </div>
-              {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+              )}
             </div>
 
             {/* Password */}
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-600 block">Password</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                Password
+              </label>
               <div className="relative">
                 <FaLock className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <input
@@ -471,16 +582,22 @@ const StudentRegister = () => {
                   value={formData.password}
                   onChange={handleChange}
                   className={`w-full bg-slate-50 border ${
-                    errors.password ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    errors.password
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all disabled:opacity-60`}
                 />
               </div>
-              {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+              )}
             </div>
 
             {/* Confirm Password */}
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-600 block">Confirm Password</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                Confirm Password
+              </label>
               <div className="relative">
                 <FaLock className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <input
@@ -491,11 +608,17 @@ const StudentRegister = () => {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   className={`w-full bg-slate-50 border ${
-                    errors.confirmPassword ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    errors.confirmPassword
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all disabled:opacity-60`}
                 />
               </div>
-              {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.confirmPassword}
+                </p>
+              )}
             </div>
 
             {/* Send OTP Button */}
@@ -526,14 +649,17 @@ const StudentRegister = () => {
           <form onSubmit={handleVerifyAndRegister} className="space-y-5">
             <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl">
               <p className="text-xs text-slate-600 text-center">
-                We've sent a one‑time verification code to <strong>{formData.email}</strong>.
+                We've sent a one‑time verification code to{" "}
+                <strong>{formData.email}</strong>.
                 <br />
                 Please enter it below to complete your registration.
               </p>
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-600 block">OTP Code</label>
+              <label className="text-xs font-semibold text-slate-600 block">
+                OTP Code
+              </label>
               <div className="relative">
                 <FaLock className="absolute left-4 top-3.5 text-slate-400 text-xs" />
                 <input
@@ -546,12 +672,16 @@ const StudentRegister = () => {
                   placeholder="Enter 6‑digit OTP"
                   maxLength="6"
                   className={`w-full bg-slate-50 border ${
-                    otpError ? "border-red-400 focus:border-red-500" : "border-slate-200 focus:border-amber-500"
+                    otpError
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-slate-200 focus:border-amber-500"
                   } focus:bg-white rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-800 outline-none transition-all`}
                   required
                 />
               </div>
-              {otpError && <p className="text-red-500 text-xs mt-1">{otpError}</p>}
+              {otpError && (
+                <p className="text-red-500 text-xs mt-1">{otpError}</p>
+              )}
             </div>
 
             {/* Action Buttons */}
@@ -592,10 +722,14 @@ const StudentRegister = () => {
                 onClick={handleResendOtp}
                 disabled={otpResendCooldown > 0 || isSendingOtp}
                 className={`text-amber-600 font-semibold hover:underline transition-colors ${
-                  otpResendCooldown > 0 ? "cursor-not-allowed opacity-60" : ""
+                  otpResendCooldown > 0
+                    ? "cursor-not-allowed opacity-60"
+                    : ""
                 }`}
               >
-                {otpResendCooldown > 0 ? `Resend in ${otpResendCooldown}s` : "Resend OTP"}
+                {otpResendCooldown > 0
+                  ? `Resend in ${otpResendCooldown}s`
+                  : "Resend OTP"}
               </button>
             </div>
           </form>
@@ -605,7 +739,10 @@ const StudentRegister = () => {
         <div className="text-center mt-6 pt-4 border-t border-slate-100 text-sm text-slate-500">
           <p>
             Already have an account?{" "}
-            <Link to="/login" className="text-amber-600 font-semibold hover:underline">
+            <Link
+              to="/login"
+              className="text-amber-600 font-semibold hover:underline"
+            >
               Log In
             </Link>
           </p>
